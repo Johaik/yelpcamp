@@ -17,8 +17,9 @@ MethodOverride = require("method-override");
 var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index")
+    mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true });
+// mongoose.connect("mongodb://<dbuser>:<dbpassword>@ds219040.mlab.com:19040/yelpcmapdb", { useNewUrlParser: true });
 
-mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true });
 var app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,7 +30,7 @@ app.use(flash());
 
 //passport config
 app.use(require("express-session")({
-    secret: "C8MGMombN7bYrinsH2rHjA8ofV4C2GIb",
+    secret: process.env.SCRT,
     resave: false,
     saveUninitialized: false
 }));
