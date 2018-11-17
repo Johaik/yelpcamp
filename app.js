@@ -18,7 +18,7 @@ var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index")
     // mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true });
-mongoose.connect("mongodb://johaik:"+process.env.DB_PASSWORD+"@ds219040.mlab.com:19040/yelpcmapdb", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGOLAB_URI, { useNewUrlParser: true });
 
 var app = express();
 app.set("view engine", "ejs");
@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 app.use(MethodOverride("_method"));
 app.use(flash());
-seedDB();
+// seedDB();
 
 //passport config
 app.use(require("express-session")({
@@ -54,6 +54,6 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
 
-app.listen(process.env.PORT, process.env.IP, function () {
+app.listen( process.env.PORT, process.env.IP, function () {
     console.log("Looks like Connect!");
 });
